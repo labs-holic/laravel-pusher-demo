@@ -29,7 +29,8 @@ class HomeController extends Controller
             'message' => 'Mensaje de prueba',
         ];
 
-        Auth::user()->notify(new Announcement($announcement));
+        $user = Auth::user();
+        $user->notify(new Announcement($announcement));
 
         return view('home');
     }

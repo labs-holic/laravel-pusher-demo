@@ -13,8 +13,20 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.component('app-notification-form', require('./components/AppNotificationForm.vue'));
+Vue.component('app-navbar', require('./components/AppNavbar.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+
+    components: [
+      'app-notification-form',
+      'app-navbar'
+    ],
+
+    methods: {
+      notify(data) {
+        this.$root.$emit('notify', data);
+      }
+    }
 });
