@@ -1,22 +1,24 @@
 <template>
 	<header>
-    <nav class="nav">
-      <div class="nav-left">
-        <span class="nav-item is-brand">
-          <a href="#">
-            Dashboard
-          </a>
-        </span>
-        <span class="nav-item">
-          <app-dropdown></app-dropdown>
+    <nav class="nav has-shadow">
+      <div class="container">
+        <div class="nav-left">
+          <span class="nav-item">
+            <a href="#">
+              Dashboard
+            </a>
+          </span>
+          <span class="nav-item">
+            <app-dropdown></app-dropdown>
+          </span>
+        </div>
+
+        <span class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
         </span>
       </div>
-
-      <span class="nav-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
     </nav>
   </header>
 </template>

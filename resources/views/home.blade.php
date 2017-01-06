@@ -1,17 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+  <app-navbar></app-navbar>
+  <div class="section">
+    <div class="container">
+      <h1 class="title">Notificaciones Push</h1>
+      <h2 class="subtitle">Escriba un mensaje para ser enviado</h2>
+      <app-notification-form></app-notification-form>
     </div>
-</div>
+  </div>
 @endsection

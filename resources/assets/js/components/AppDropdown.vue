@@ -5,12 +5,12 @@
         <i :data-count="total" class="fa fa-bell badge" :data-badge="total" :class="{'hide-count': !hasUnread}"></i>
       </span>
     </a>
-		<app-dropdown-list :class="{'is-showing': showing}"></app-dropdown-list>
+		<app-dropdown-list :class="{ 'is-showing': showing }" :total="total"></app-dropdown-list>
 	</span>
 </template>
 
 <script>
-	Vue.component('app-dropdown-list', require('./AppDropdownList.vue'));
+	Vue.component('app-dropdown-list', require('./AppDropdownList.vue'))
 
 	export default {
 		name: 'app-dropdown',
@@ -34,24 +34,34 @@
 
 	  	notShow(e) {
 	  		if (this.showing && e.keyCode === 27) {
-		  		this.showing = false;
+		  		this.showing = false
 	  		}
 	  	},
 
-	  	setTotal(total) {
-	  		this.total = total;
+	  	increment() {
+	  		this.total++
+	  	},
+
+	  	decrement() {
+	  		this.total--
+	  	},
+
+	  	zero() {
+	  		this.total = 0
 	  	}
 	  },
 
 	  computed: {
 	  	hasUnread() {
-	  		return this.total > 0;
+	  		return this.total > 0
 	  	}
 	  },
 
 	  created() {
-	  	this.$root.$on('total-updated', this.setTotal);
-	  	window.addEventListener('keyup', this.notShow);
+	  	this.$root.$on('increment', this.increment)
+	  	this.$root.$on('decrement', this.decrement)
+	  	this.$root.$on('zero', this.zero)
+	  	window.addEventListener('keyup', this.notShow)
 	  }
 	}
 </script>

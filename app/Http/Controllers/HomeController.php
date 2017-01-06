@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\Announcement;
-use Illuminate\Support\Facades\Auth;
+use App\Events\Announcement;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //
     }
 
     /**
@@ -24,14 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $announcement = [
-            'title' => 'Hola mundo!',
-            'message' => 'Mensaje de prueba',
-        ];
-
-        $user = Auth::user();
-        $user->notify(new Announcement($announcement));
-
         return view('home');
+    }
+
+    public function announcement(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required',
+            'message' => 'required',
+        ]);
+
+        broadcast(new Announcement($request->all()));
+
+        return ['message' => 'Notification created succefully'];
     }
 }

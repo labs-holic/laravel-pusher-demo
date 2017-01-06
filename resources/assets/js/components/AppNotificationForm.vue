@@ -3,7 +3,7 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <form action="/notifications" method="POST" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+          <form action="/announcements" method="POST" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             <label class="label">Title</label>
             <p class="control has-icon has-icon-right">
               <input 
@@ -163,8 +163,8 @@
 
     methods: {
       onSubmit() {
-        this.form.post('/notifications')
-          .then(data => console.log(data))
+        this.form.post('/announcements')
+          .then(data => {})
           .catch(errors => console.log(errors))
       }
     }

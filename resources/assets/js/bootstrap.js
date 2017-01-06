@@ -39,9 +39,13 @@ window.axios = require('axios');
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from "laravel-echo"
+import Echo from "laravel-echo"
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+const {key} = window.PUSHER_OPTIONS;
+
+if (key) {
+  window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: key
+  })
+}

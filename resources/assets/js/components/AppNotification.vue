@@ -3,11 +3,6 @@
 		<div class="card is-fullwidth">
 		  <div class="card-content">
 		  	<div class="media">
-		  		<div class="media-left">
-			  		<figure class="image is-32x32">
-		          <img src="http://placehold.it/64x64" alt="Image">
-		        </figure>
-		  		</div>
 		  		<div class="media-content">
 		  			{{ notification.title }}
 		  		</div>

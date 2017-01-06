@@ -37,34 +37,50 @@
 			'app-notification'
 		],
 
+		props: [
+			'total'
+		],
+
 		data() {
 	  	return {
-		  	notifications: [],
-
-				total: 0,
+		  	notifications: []
 	  	}
 	  },
 
 	  methods: {
 	  	remove(index) {
-	  		this.notifications.splice(index, 1);
-	  		this.setTotal(this.total - 1);
+	  		this.notifications.splice(index, 1)
+	  		this.decrease()
 	  	},
 
 	  	removeAll() {
-	  		this.notifications.splice(0, this.notifications.length);
-	  		this.setTotal(0);
+	  		this.notifications.splice(0, this.notifications.length)
+	  		this.zero()
 	  	},
 
 	  	addNotification(notification) {
-	  		this.notifications.unshift(notification);
-	  		this.setTotal(this.total + 1);
+	  		this.notifications.unshift(notification)
+	  		this.increase()
 	  	},
 
-	  	setTotal(total) {
-	  		this.total = total;
-	  		this.$root.$emit('total-updated', this.total);
-	  	}
+	  	decrease() {
+	  		this.$root.$emit('decrement')
+	  	},
+
+	  	increase() {
+	  		this.$root.$emit('increment')
+	  	},
+
+	  	zero() {
+	  		this.$root.$emit('zero')
+	  	},
+
+	  	listen() {
+	      window.Echo.channel(`announcements`)
+	        .listen('Announcement', e => {
+	          this.addNotification(e.announcement)
+	        })
+	    }
 	  },
 
 	  computed: {
@@ -74,11 +90,13 @@
 	  },
 
 	  mounted() {
-	  	this.setTotal(this.notifications.length);
+	    if (window.Echo) {
+	      this.listen()
+	    }
 	  },
 
 	  created() {
-	  	this.$root.$on('notify', this.addNotification);
+	  	this.$root.$on('notify', this.addNotification)
 	  }
 	}
 </script>
