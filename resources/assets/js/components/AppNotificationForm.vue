@@ -15,7 +15,9 @@
                 placeholder="title"
                 v-model="form.title"
               >
-              <i v-if="form.errors.has('title')" class="fa fa-warning"></i>
+              <span v-if="form.errors.has('title')" class="icon is-small">
+                <i class="fa fa-warning"></i>
+              </span>
 
               <span class="help is-danger" v-if="form.errors.has('title')" v-text="form.errors.get('title')"></span>
             </p>
@@ -30,8 +32,10 @@
                 v-model="form.message"
               >
               </textarea>
-              <i v-if="form.errors.has('message')" class="fa fa-warning"></i>
-
+              <span v-if="form.errors.has('title')" class="icon is-small">
+                <i class="fa fa-warning"></i>
+              </span>
+              
               <span class="help is-danger" v-if="form.errors.has('message')" v-text="form.errors.get('message')"></span>
             </p>
             <p class="control">
@@ -45,111 +49,7 @@
 </template>
 
 <script>
-  class Errors {
-    
-    constructor() {
-      this.errors = {};
-    }
-
-    get(field) {
-      if (this.errors[field]) {
-        return this.errors[field][0]
-      }
-    }
-
-    record(errors) {
-      this.errors = errors
-    }
-
-    clear(field) {
-      if (field) {
-        delete(this.errors[field])
-        return
-      }
-
-      this.errors = {}
-    }
-
-    has(field) {
-      return this.errors.hasOwnProperty(field)
-    }
-
-    any() {
-      return Object.keys(this.errors).length > 0
-    }
-  }
-
-  class Form {
-
-    constructor(data) {
-      this.originalData = data
-      
-      for (let field in data) {
-        this[field] = data[field]
-      }
-
-      this.errors = new Errors()
-      this.submitting = false
-    }
-
-    reset() {
-      for (let field in this.originalData) {
-        this[field] = ''
-      }
-
-      this.errors.clear()
-    }
-
-    data() {
-      let data = {}
-
-      for (let property in this.originalData) {
-        data[property] = this[property]
-      }
-
-      return data
-    }
-
-    post(url) {
-      return this.submit('post', url)
-    }
-
-    delete(url) {
-      return this.submit('delete', url)
-    }
-
-    get(url) {
-      return this.submit('get', url)
-    }
-
-    submit(method, url) {
-      this.submitting = true
-
-      return new Promise((resolve, reject) => {
-        axios[method](url, this.data())
-          .then(response => {
-            this.submitting = false
-            this.onSuccess(response.data)
-
-            resolve(response.data)
-          })
-          .catch(error => {
-            this.submitting = false
-            this.onFail(error.response.data)
-
-            reject(error.response.data)
-          })
-      })
-    }
-
-    onSuccess(data) {
-      this.reset()
-    }
-
-    onFail(error) {
-      this.errors.record(error)
-    }
-  }
+  import Form from '../core/Form.js';
 
   export default {
     data() {
